@@ -14,7 +14,7 @@ HEADERS = -I ./inc
 CFLAGS = -Wall -Wextra -Werror
 LEAKS = valgrind --leak-check=full --show-leak-kinds=all --gen-suppressions=all --suppressions=./libraries/MLX42/suppress.sup
 RM = rm -f
-CC = cc
+CC = cc -g
 SRCS_DIR = src
 OBJS_DIR = obj
 BIN = pipex
