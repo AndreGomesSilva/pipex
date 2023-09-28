@@ -5,14 +5,18 @@
 #include "../inc/pipex.h"
 #include <stdio.h>
 
-int check_args(char **str)
+int check_program_name(char **str)
 {
-	if(!ft_strncmp(*str, "./pipex", 10))
-	{
-		printf("first arg %s", *str);
-	}
+	char *right_name;
+	char *pass_name;
 
-	return (1);
+	pass_name = *(str + 0);
+	right_name = "/pipex";
+	while(pass_name && *(pass_name + 6))
+		pass_name++;
+	if (!ft_strncmp(right_name, pass_name, 6))
+		return (1);
+	return (0);
 }
 
 int	main(int argc, char **argv)
@@ -21,13 +25,15 @@ int	main(int argc, char **argv)
 	ft_bzero(&pipex, sizeof(t_pipex));
 	if (argc == 5)
 	{
-		check_args(argv);
+		if (check_program_name(argv))
+			ft_printf("it's ok\n");
 	}
 	else
 	{
+		ft_printf("problem if the args\n");
 		return (1);
 	}
-	printf("finish");
+	ft_printf("finish\n");
 	return (0);
 }
 //int main()
