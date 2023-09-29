@@ -19,13 +19,22 @@ int check_program_name(char **str)
 	return (0);
 }
 
+int check_infile(char *infile)
+{
+	if(access(infile, F_OK) != 0)
+	{
+		ft_printf("the file: %s don't exist. \n", infile);
+	}
+
+}
+
 int	main(int argc, char **argv)
 {
 	t_pipex pipex;
 	ft_bzero(&pipex, sizeof(t_pipex));
 	if (argc == 5)
 	{
-		if (check_program_name(argv))
+		if (check_program_name(argv) && check_infile(*(argv + 1)))
 			ft_printf("it's ok\n");
 	}
 	else
