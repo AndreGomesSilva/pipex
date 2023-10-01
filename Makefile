@@ -21,10 +21,13 @@ BIN = pipex
 NAME = $(BIN)
 LIBFT_PATH = libraries/libft
 LIBFT = $(LIBFT_PATH)/libft.a
-ARGS = ""
+ARGS = "infile cmd1 cmd2 outfile"
 
 FILES =\
 	main \
+	handle_error \
+	process_handling \
+	args_validate \
 
 OBJS = $(addprefix $(OBJS_DIR)/, $(addsuffix .o, $(FILES)))
 
@@ -33,7 +36,7 @@ all: $(NAME)
 $(NAME): $(LIBFT) $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_PATH) -lft $(HEADERS) -o $@
 
-$(OBJS_DIR)/%.o:$(SRCS_DIR)/%.c | $(OBJS_DIR)
+$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c | $(OBJS_DIR)
 	$(CC) $(CFLAGS) -c $< $(HEADERS) -o $@
 
 $(LIBFT):
