@@ -4,7 +4,7 @@
 
 #include "../inc/pipex.h"
 
-int check_program_name(char **str)
+static int check_program_name(char **str)
 {
 	char *right_name;
 	char *pass_name;
@@ -19,16 +19,16 @@ int check_program_name(char **str)
 }
 
 
-int check_infile(char *infile)
+static int check_infile(t_pipex *pipex)
 {
-	if(access(infile, F_OK) != 0)
-		handle_error(errno);
+	if(access(pipex->infile_path, F_OK) == ERROR)
+		handle_error(errno, pipex);
 	return (EXIT_OK);
 }
 
-int check_args(int number_args, char **args)
+int check_args(char **args, t_pipex *pipex)
 {
-	if (number_args == 5 && !check_program_name(args) && !check_infile(args[1]))
+	if (!check_program_name(args) && !check_infile(pipex))
 		return (EXIT_OK);
 	return (EXIT_FAIL);
 }

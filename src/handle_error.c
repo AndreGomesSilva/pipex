@@ -1,6 +1,6 @@
 #include "../inc/pipex.h"
 
-static void free_pipex(t_pipex *pipex)
+void free_pipex(t_pipex *pipex)
 {
 	if (pipex->infile_fd)
 		close(pipex->infile_fd);

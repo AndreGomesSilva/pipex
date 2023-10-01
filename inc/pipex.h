@@ -32,7 +32,8 @@ typedef struct s_pipex
 } t_pipex;
 
 void handle_error(int errnum, t_pipex *pipex);
-int check_args(int number_args, char **args);
+int check_args(char **args, t_pipex *pipex);
+void free_pipex(t_pipex *pipex);
 void child_process(t_pipex *pipex);
 void parent_process(t_pipex *pipex);
 #endif
