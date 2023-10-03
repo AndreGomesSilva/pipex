@@ -11,12 +11,12 @@
 # define ERROR (-1)
 
 # include <unistd.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 # include <stdlib.h>
 # include <string.h>
 # include <errno.h>
 # include <fcntl.h>
-# include <sys/types.h>
-# include <sys/wait.h>
 # include "../libraries/libft/inc/libft.h"
 
 typedef struct s_pipex
@@ -27,7 +27,7 @@ typedef struct s_pipex
 	char *outfile_path;
 	char *cmd1;
 	char *cmd2;
-	int pid;
+	pid_t pid;
 	int pipe_fd[2];
 } t_pipex;
 

@@ -16,13 +16,10 @@ static int pipex_init(t_pipex *pipex)
 	pipex->pid = fork();
 	if (pipex->pid == ERROR)
 		handle_error(errno, pipex);
-	if (pipex->pid == 0)
+	else if(pipex->pid == 0)
 		child_process(pipex);
-	else
-	{
-		wait(NULL);
+	else if(pipex->pid > 0)
 		parent_process(pipex);
-	}
 	return (EXIT_OK);
 }
 
