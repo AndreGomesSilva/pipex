@@ -8,6 +8,10 @@ void free_pipex(t_pipex *pipex)
 		close(pipex->pipe_fd[READ]);
 	if (pipex->pipe_fd[WRITE])
 		close(pipex->pipe_fd[WRITE]);
+	if (pipex->cmd1)
+		free(pipex->cmd1);
+	if (pipex->cmd2)
+		free(pipex->cmd2);
 }
 
 void handle_error(int errnum, t_pipex *pipex)

@@ -22,15 +22,18 @@
 typedef struct s_pipex
 {
 	int infile_fd;
+	char *bin_path;
 	int outfile_fd;
 	char *infile_path;
 	char *outfile_path;
 	char *cmd1;
 	char *cmd2;
+	char buf;
 	pid_t pid;
 	int pipe_fd[2];
 } t_pipex;
 
+char* get_bin_path(char **str);
 void handle_error(int errnum, t_pipex *pipex);
 int check_args(char **args, t_pipex *pipex);
 void free_pipex(t_pipex *pipex);

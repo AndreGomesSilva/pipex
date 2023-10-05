@@ -28,6 +28,7 @@ FILES =\
 	handle_error \
 	process_handling \
 	args_validate \
+	handle_envp \
 
 OBJS = $(addprefix $(OBJS_DIR)/, $(addsuffix .o, $(FILES)))
 

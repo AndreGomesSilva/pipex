@@ -1,11 +1,15 @@
 #include "../inc/pipex.h"
 
-static void set_pipex(char **argv, t_pipex *pipex)
+static void set_pipex(char **argv, char **envp, t_pipex *pipex)
 {
 	pipex->infile_path = argv[1];
 	pipex->outfile_path = argv[4];
-	pipex->cmd1 = argv[2];
-	pipex->cmd2 = argv[3];
+	pipex->bin_path = get_bin_path(envp);
+	if (pipex->bin_path)
+	{
+		pipex->cmd1 = ft_strjoin(pipex->bin_path, argv[2]);
+		pipex->cmd2 = ft_strjoin(pipex->bin_path, argv[3]);
+	}
 }
 
 static int pipex_init(t_pipex *pipex)
@@ -23,15 +27,16 @@ static int pipex_init(t_pipex *pipex)
 	return (EXIT_OK);
 }
 
-int	main(int argc, char **argv)
+int	main(int argc, char **argv, char *envp[])
 {
 	t_pipex pipex;
 	ft_bzero(&pipex, sizeof(t_pipex));
 	if (argc == 5)
 	{
-		set_pipex(argv, &pipex);
-		if (!check_args(argv, &pipex))
+		set_pipex(argv, envp, &pipex);
+		if (!check_args(argv, &pipex) && pipex.bin_path) {
 			pipex_init(&pipex);
+		}
 		else
 		{
 			ft_printf("invalid args");
