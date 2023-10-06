@@ -19,20 +19,26 @@
 # include <fcntl.h>
 # include "../libraries/libft/inc/libft.h"
 
+
 typedef struct s_pipex
 {
 	int infile_fd;
-	char *bin_path;
+	char **bin_path;
 	int outfile_fd;
 	char *infile_path;
 	char *outfile_path;
 	char *cmd1;
 	char *cmd2;
 	char buf;
+	char **exec_argv;
 	pid_t pid;
 	int pipe_fd[2];
 } t_pipex;
 
+
+char **join_cmd_path(char *str, char *cmd);
+void free_matrix(char **matrix);
+void create_argv_to_execve(t_pipex *pipex, char *cmd);
 char* get_bin_path(char **str);
 void handle_error(int errnum, t_pipex *pipex);
 int check_args(char **args, t_pipex *pipex);

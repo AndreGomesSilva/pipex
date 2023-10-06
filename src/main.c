@@ -5,11 +5,10 @@ static void set_pipex(char **argv, char **envp, t_pipex *pipex)
 	pipex->infile_path = argv[1];
 	pipex->outfile_path = argv[4];
 	pipex->bin_path = get_bin_path(envp);
-	if (pipex->bin_path)
-	{
-		pipex->cmd1 = ft_strjoin(pipex->bin_path, argv[2]);
-		pipex->cmd2 = ft_strjoin(pipex->bin_path, argv[3]);
-	}
+	pipex->cmd1 = argv[2];
+	pipex->cmd2 = argv[3];
+	pipex->bin_path = join_cmd_path(pipex->bin_path, pipex->cmd1);
+	create_argv_to_execve(pipex, pipex->cmd1);
 }
 
 static int pipex_init(t_pipex *pipex)
@@ -27,14 +26,26 @@ static int pipex_init(t_pipex *pipex)
 	return (EXIT_OK);
 }
 
+#include <stdio.h>
 int	main(int argc, char **argv, char *envp[])
 {
 	t_pipex pipex;
 	ft_bzero(&pipex, sizeof(t_pipex));
+//	int i;
+//
+//	i = 0;
+//
+//	while(envp[i])
+//	{
+//		ft_printf("%s\n", envp[i]);
+//		i++;
+//	}
 	if (argc == 5)
 	{
 		set_pipex(argv, envp, &pipex);
 		if (!check_args(argv, &pipex) && pipex.bin_path) {
+			if (execve("/usr/bin/ls",pipex.exec_argv , envp) == ERROR)
+				handle_error(errno, &pipex);
 			pipex_init(&pipex);
 		}
 		else

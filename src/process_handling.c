@@ -24,6 +24,7 @@ void parent_process(t_pipex *pipex)
 	int status;
 	waitpid(pipex->pid, &status, 0 );
 	ft_printf("parent pid %d: \n", pipex->pid);
+
 	close(pipex->pipe_fd[WRITE]);
 //	dup2(pipex->pipe_fd[READ], STDIN_FILENO);
 	while (read(pipex->pipe_fd[READ], &pipex->buf, sizeof(char)))

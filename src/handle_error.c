@@ -1,5 +1,17 @@
 #include "../inc/pipex.h"
 
+void free_matrix(char **matrix)
+{
+	int i;
+	i = 0;
+	while (matrix[i])
+	{
+		free(matrix[i]);
+		i++;
+	}
+	free(matrix);
+}
+
 void free_pipex(t_pipex *pipex)
 {
 	if (pipex->infile_fd)
@@ -12,6 +24,9 @@ void free_pipex(t_pipex *pipex)
 		free(pipex->cmd1);
 	if (pipex->cmd2)
 		free(pipex->cmd2);
+	if (pipex->exec_argv){
+		free_matrix(pipex->exec_argv);
+	}
 }
 
 void handle_error(int errnum, t_pipex *pipex)
