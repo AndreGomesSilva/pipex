@@ -20,12 +20,10 @@ void free_pipex(t_pipex *pipex)
 		close(pipex->pipe_fd[READ]);
 	if (pipex->pipe_fd[WRITE])
 		close(pipex->pipe_fd[WRITE]);
-	if (pipex->cmd1)
-		free(pipex->cmd1);
-	if (pipex->cmd2)
-		free(pipex->cmd2);
-	if (pipex->exec_argv){
-		free_matrix(pipex->exec_argv);
+	if (pipex->cmd->bin_path)
+		free_matrix((pipex->cmd->splipted_path));
+	if (pipex->cmd->exec_argv){
+		free_matrix(pipex->cmd->exec_argv);
 	}
 }
 

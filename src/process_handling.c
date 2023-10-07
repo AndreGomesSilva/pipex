@@ -1,25 +1,22 @@
 #include "../inc/pipex.h"
 
-void child_process(t_pipex *pipex)
+void child_process(t_pipex *pipex, char **envp)
 {
 	ft_printf("Child: child pid %d: \n", pipex->pid);
-	if (close(pipex->pipe_fd[READ]) != 0)
+	dup2(pipex->pipe_fd[WRITE], STDOUT_FILENO);
+	if (close(pipex->pipe_fd[READ]) != 0) {
 		handle_error(errno, pipex);
-	pipex->infile_fd = open(pipex->infile_path, O_RDONLY);
-	if (pipex->infile_fd == ERROR)
-		handle_error(errno, pipex);
-//	dup2(pipex->pipe_fd[WRITE], STDOUT_FILENO);
-	while(read(pipex->infile_fd, &pipex->buf, 1))
-	{
-		if (write(pipex->pipe_fd[WRITE], &pipex->buf, sizeof(char)) == ERROR)
-			handle_error(errno, pipex);
 	}
+	pipex->infile_fd = open(pipex->infile_path, O_RDONLY);
+	if (pipex->infile_fd)
+		handle_error(errno, pipex);
 	close(pipex->pipe_fd[WRITE]);
 	close(pipex->infile_fd);
+	execve(pipex->cmd->bin_path, pipex->cmd->exec_argv, NULL);
 	ft_printf("finish child process\n");
 }
 
-void parent_process(t_pipex *pipex)
+void parent_process(t_pipex *pipex, char **envp)
 {
 	int status;
 	waitpid(pipex->pid, &status, 0 );

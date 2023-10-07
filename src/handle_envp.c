@@ -22,34 +22,45 @@ char	*ft_join_path(char *s1, char *s2)
 		free(s1);
 		return (new_str);
 	}
+	free(new_str);
 	return (NULL);
 }
 void create_argv_to_execve(t_pipex *pipex, char *cmd)
 {
-	pipex->exec_argv = ft_split(cmd, ' ');
+	pipex->cmd->exec_argv = ft_split(cmd, ' ');
 }
 
-char **join_cmd_path(char *str, char *cmd)
+char	*get_bin_path(char **splited_path)
+{
+	int i;
+	i = 0;
+
+	while (splited_path[i])
+	{
+		if (!access(splited_path[i], F_OK))
+			return (splited_path[i]);
+		i++;
+	}
+	return (NULL);
+}
+
+char **split_path(char *str, char *cmd)
 {
 	char **bin;
-	char *slash;
 	int i;
 
 	i = 0;
-	slash = ft_calloc(2, sizeof(char));
-	slash[0] = '/';
 	bin = ft_split(str, ':');
 	while (bin[i])
 	{
-		bin[i] = ft_join_path(bin[i], slash);
+		bin[i] = ft_join_path(bin[i], "/");
 		bin[i] = ft_join_path(bin[i], cmd);
 		i++;
 	}
-	free(slash);
 	return (bin);
 }
 
-char *get_bin_path(char **str)
+char *get_path(char **str)
 {
 	int i;
 	char *path;

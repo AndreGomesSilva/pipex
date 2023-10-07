@@ -4,49 +4,40 @@ static void set_pipex(char **argv, char **envp, t_pipex *pipex)
 {
 	pipex->infile_path = argv[1];
 	pipex->outfile_path = argv[4];
-	pipex->bin_path = get_bin_path(envp);
-	pipex->cmd1 = argv[2];
-	pipex->cmd2 = argv[3];
-	pipex->bin_path = join_cmd_path(pipex->bin_path, pipex->cmd1);
-	create_argv_to_execve(pipex, pipex->cmd1);
+	pipex->cmd->path = get_path(envp);
+	pipex->cmd->first_cmd = argv[2];
+	pipex->cmd->second_cmd = argv[3];
+	pipex->cmd->splipted_path = split_path(pipex->cmd->path, pipex->cmd->first_cmd);
+	pipex->cmd->bin_path = get_bin_path(pipex->cmd->splipted_path);
+	create_argv_to_execve(pipex, pipex->cmd->first_cmd);
 }
 
-static int pipex_init(t_pipex *pipex)
+static int pipex_init(t_pipex *pipex, char **envp)
 {
-
 	if (pipe(pipex->pipe_fd) == ERROR)
 		handle_error(errno, pipex);
 	pipex->pid = fork();
 	if (pipex->pid == ERROR)
 		handle_error(errno, pipex);
 	else if(pipex->pid == 0)
-		child_process(pipex);
+		child_process(pipex, envp);
 	else if(pipex->pid > 0)
-		parent_process(pipex);
+		parent_process(pipex, envp);
 	return (EXIT_OK);
 }
 
-#include <stdio.h>
 int	main(int argc, char **argv, char *envp[])
 {
 	t_pipex pipex;
+	t_cmd	cmd;
 	ft_bzero(&pipex, sizeof(t_pipex));
-//	int i;
-//
-//	i = 0;
-//
-//	while(envp[i])
-//	{
-//		ft_printf("%s\n", envp[i]);
-//		i++;
-//	}
+	ft_bzero(&cmd, sizeof(t_cmd));
+	pipex.cmd = &cmd;
 	if (argc == 5)
 	{
 		set_pipex(argv, envp, &pipex);
-		if (!check_args(argv, &pipex) && pipex.bin_path) {
-			if (execve("/usr/bin/ls",pipex.exec_argv , envp) == ERROR)
-				handle_error(errno, &pipex);
-			pipex_init(&pipex);
+		if (!check_args(argv, &pipex) && pipex.cmd->path) {
+			pipex_init(&pipex, envp);
 		}
 		else
 		{
