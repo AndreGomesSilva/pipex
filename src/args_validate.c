@@ -18,7 +18,6 @@ static int check_program_name(char **str)
 	return (EXIT_FAIL);
 }
 
-
 static int check_infile(t_pipex *pipex)
 {
 	if(access(pipex->infile_path, F_OK) == ERROR && access(pipex->infile_path, R_OK) == ERROR)

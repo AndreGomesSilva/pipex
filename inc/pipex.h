@@ -25,7 +25,8 @@ typedef struct s_cmd {
 	char *bin_path;
 	char *first_cmd;
 	char *second_cmd;
-	char **exec_argv;
+	char **exec_first_cmd;
+	char **exec_second_cmd;
 } t_cmd;
 
 typedef struct s_pipex
@@ -34,17 +35,15 @@ typedef struct s_pipex
 	int outfile_fd;
 	char *infile_path;
 	char *outfile_path;
-	char buf;
 	pid_t pid;
 	int pipe_fd[2];
 	t_cmd *cmd;
 } t_pipex;
 
-
 char	*get_bin_path(char **splited_path);
 char **split_path(char *str, char *cmd);
 void free_matrix(char **matrix);
-void create_argv_to_execve(t_pipex *pipex, char *cmd);
+char **split_argv_cmd(char *cmd);
 char* get_path(char **str);
 void handle_error(int errnum, t_pipex *pipex);
 int check_args(char **args, t_pipex *pipex);

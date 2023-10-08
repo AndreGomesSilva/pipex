@@ -25,9 +25,9 @@ char	*ft_join_path(char *s1, char *s2)
 	free(new_str);
 	return (NULL);
 }
-void create_argv_to_execve(t_pipex *pipex, char *cmd)
+char **split_argv_cmd(char *cmd)
 {
-	pipex->cmd->exec_argv = ft_split(cmd, ' ');
+	return(ft_split(cmd, ' '));
 }
 
 char	*get_bin_path(char **splited_path)
@@ -37,7 +37,7 @@ char	*get_bin_path(char **splited_path)
 
 	while (splited_path[i])
 	{
-		if (!access(splited_path[i], F_OK))
+		if (!access(splited_path[i], X_OK))
 			return (splited_path[i]);
 		i++;
 	}

@@ -7,9 +7,6 @@ static void set_pipex(char **argv, char **envp, t_pipex *pipex)
 	pipex->cmd->path = get_path(envp);
 	pipex->cmd->first_cmd = argv[2];
 	pipex->cmd->second_cmd = argv[3];
-	pipex->cmd->splipted_path = split_path(pipex->cmd->path, pipex->cmd->first_cmd);
-	pipex->cmd->bin_path = get_bin_path(pipex->cmd->splipted_path);
-	create_argv_to_execve(pipex, pipex->cmd->first_cmd);
 }
 
 static int pipex_init(t_pipex *pipex, char **envp)
@@ -51,6 +48,5 @@ int	main(int argc, char **argv, char *envp[])
 		return (EXIT_FAIL);
 	}
 	free_pipex(&pipex);
-	ft_printf("finish\n");
 	return (EXIT_OK);
 }

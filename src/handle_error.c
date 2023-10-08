@@ -22,9 +22,10 @@ void free_pipex(t_pipex *pipex)
 		close(pipex->pipe_fd[WRITE]);
 	if (pipex->cmd->bin_path)
 		free_matrix((pipex->cmd->splipted_path));
-	if (pipex->cmd->exec_argv){
-		free_matrix(pipex->cmd->exec_argv);
-	}
+	if (pipex->cmd->exec_first_cmd)
+		free_matrix(pipex->cmd->exec_first_cmd);
+	if (pipex->cmd->exec_second_cmd)
+		free_matrix(pipex->cmd->exec_second_cmd);
 }
 
 void handle_error(int errnum, t_pipex *pipex)
