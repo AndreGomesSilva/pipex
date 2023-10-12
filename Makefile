@@ -12,7 +12,7 @@
 
 HEADERS = -I ./inc
 CFLAGS = -Wall -Wextra -Werror
-LEAKS = valgrind --leak-check=full --show-leak-kinds=all --gen-suppressions=all --suppressions=./libraries/MLX42/suppress.sup
+LEAKS = valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes
 RM = rm -f
 CC = cc -g
 SRCS_DIR = src
@@ -21,7 +21,7 @@ BIN = pipex
 NAME = $(BIN)
 LIBFT_PATH = libraries/libft
 LIBFT = $(LIBFT_PATH)/libft.a
-ARGS = "infile cmd1 cmd2 outfile"
+ARGS = ./src/main.c "grep abc" "grep grep" ./outfile
 
 FILES =\
 	main \
@@ -44,7 +44,7 @@ $(LIBFT):
 	$(MAKE)	-C $(LIBFT_PATH)
 
 play: all
-	./$(BIN) $(ARGS)
+	$(LEAKS) ./$(BIN) $(ARGS)
 
 $(OBJS_DIR):
 	@mkdir -p $(OBJS_DIR)
