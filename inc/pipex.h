@@ -6,7 +6,7 @@
 /*   By: angomes- <angomes-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 15:27:51 by angomes-          #+#    #+#             */
-/*   Updated: 2023/10/11 18:08:05 by angomes-         ###   ########.fr       */
+/*   Updated: 2023/10/13 18:37:41 by angomes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,10 @@
 typedef struct s_cmd
 {
 	char	*path;
-	char	**splipted_path;
-	char	*bin_path;
+	char	**split_path_parent;
+	char	**split_path_child;
+	char	*bin_path_parent;
+	char	*bin_path_child;
 	char	*first_cmd;
 	char	*second_cmd;
 	char	**exec_first_cmd;
@@ -50,9 +52,10 @@ typedef struct s_pipex
 	t_cmd	*cmd;
 }			t_pipex;
 
-
+void		get_cmd(t_pipex *pipex);
 char		*get_terminal(char **str);
-char		*get_bin_path(char **splited_path);
+char		*ft_join_path(char *s1, char *s2);
+char		*get_bin_path(char **split_path);
 char		**split_path(char *str, char *cmd);
 void		free_matrix(char **matrix);
 char		**split_argv_cmd(char *cmd);

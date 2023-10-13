@@ -12,16 +12,16 @@
 
 HEADERS = -I ./inc
 CFLAGS = -Wall -Wextra -Werror
-LEAKS = valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes
+LEAKS = valgrind --leak-check=full --show-leak-kinds=all
 RM = rm -f
-CC = cc -g
+CC = cc
 SRCS_DIR = src
 OBJS_DIR = obj
 BIN = pipex
 NAME = $(BIN)
 LIBFT_PATH = libraries/libft
 LIBFT = $(LIBFT_PATH)/libft.a
-ARGS = ./infile "grep" "wc -l" ./outfile
+ARGS = ./infile "ls -la" "wc -l" ./outfile
 
 FILES =\
 	main \
@@ -29,6 +29,7 @@ FILES =\
 	process_handling \
 	args_validate \
 	handle_envp \
+	pipex_util \
 
 OBJS = $(addprefix $(OBJS_DIR)/, $(addsuffix .o, $(FILES)))
 

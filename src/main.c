@@ -6,7 +6,7 @@
 /*   By: angomes- <angomes-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 15:24:03 by angomes-          #+#    #+#             */
-/*   Updated: 2023/10/11 18:07:55 by angomes-         ###   ########.fr       */
+/*   Updated: 2023/10/13 18:35:52 by angomes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static void	set_pipex(char **argv, char **envp, t_pipex *pipex)
 	pipex->cmd->first_cmd = argv[2];
 	pipex->cmd->second_cmd = argv[3];
 	pipex->terminal_path = get_terminal(envp);
+	get_cmd(pipex);
 }
 
 static int	pipex_init(t_pipex *pipex, char **envp)
@@ -53,13 +54,13 @@ int	main(int argc, char **argv, char *envp[])
 			pipex_init(&pipex, envp);
 		else
 		{
-			ft_printf("ERROR:\ninvalid args\n");
+			ft_printf("%s: invalid args\n", pipex.terminal_path);
 			exit(EXIT_FAIL);
 		}
 	}
 	else
 	{
-		ft_printf("ERROR:\ninvalid number argument\n");
+		ft_printf("%s :invalid number argument\n", pipex.terminal_path);
 		return (EXIT_FAIL);
 	}
 	free_pipex(&pipex);
