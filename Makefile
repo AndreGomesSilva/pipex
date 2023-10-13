@@ -21,7 +21,7 @@ BIN = pipex
 NAME = $(BIN)
 LIBFT_PATH = libraries/libft
 LIBFT = $(LIBFT_PATH)/libft.a
-ARGS = ./src/main.c "grep abc" "grep grep" ./outfile
+ARGS = ./infile "grep" "wc -l" ./outfile
 
 FILES =\
 	main \

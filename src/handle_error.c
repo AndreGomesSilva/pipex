@@ -43,7 +43,10 @@ void	free_pipex(t_pipex *pipex)
 
 void	handle_error(int errnum, t_pipex *pipex)
 {
-	ft_printf("Error:\n %s\n", strerror(errnum));
+	if (errnum == EACCES)
+		ft_printf("%s: %s: %s", pipex->terminal_path, strerror(errnum), pipex->infile_path);
+	else
+		ft_printf("%s: \n", strerror(errnum));
 	free_pipex(pipex);
 	exit(EXIT_FAIL);
 }

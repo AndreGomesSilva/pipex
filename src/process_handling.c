@@ -12,6 +12,31 @@
 
 #include "../inc/pipex.h"
 
+char	*get_terminal(char **str)
+{
+	int		i;
+	int		len;
+	char	*path;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_strncmp(str[i], "SHELL", 5))
+		{
+			len = ft_strlen(str[i]);
+			path = str[i];
+			while (len)
+			{
+				if (path[len] == '/')
+					return (&path[len + 1]);
+				len--;
+			}
+		}
+		i++;
+	}
+	return (NULL);
+}
+
 void	get_cmd(t_pipex *pipex)
 {
 	if (pipex->pid == 0)
@@ -27,9 +52,12 @@ void	get_cmd(t_pipex *pipex)
 				pipex->cmd->exec_second_cmd[0]);
 	}
 	if ((!pipex->cmd->exec_second_cmd || !pipex->cmd->exec_first_cmd)
-		&& !pipex->cmd->splipted_path)
+		|| !pipex->cmd->splipted_path)
 	{
-		ft_printf("Error:\n Problem to execute the commands\n");
+		if (!pipex->cmd->exec_first_cmd)
+			ft_printf("%s: command not found: %s\n", pipex->terminal_path, pipex->cmd->first_cmd);
+		else if (!pipex->cmd->exec_second_cmd)
+			ft_printf("%s: command not found: %s\n", pipex->terminal_path, pipex->cmd->second_cmd);
 		free_pipex(pipex);
 		exit(EXIT_FAIL);
 	}

@@ -44,11 +44,14 @@ typedef struct s_pipex
 	int		outfile_fd;
 	char	*infile_path;
 	char	*outfile_path;
+	char	*terminal_path;
 	pid_t	pid;
 	int		pipe_fd[2];
 	t_cmd	*cmd;
 }			t_pipex;
 
+
+char		*get_terminal(char **str);
 char		*get_bin_path(char **splited_path);
 char		**split_path(char *str, char *cmd);
 void		free_matrix(char **matrix);

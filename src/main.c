@@ -19,6 +19,7 @@ static void	set_pipex(char **argv, char **envp, t_pipex *pipex)
 	pipex->cmd->path = get_path(envp);
 	pipex->cmd->first_cmd = argv[2];
 	pipex->cmd->second_cmd = argv[3];
+	pipex->terminal_path = get_terminal(envp);
 }
 
 static int	pipex_init(t_pipex *pipex, char **envp)

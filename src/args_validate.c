@@ -28,7 +28,7 @@ static int	check_program_name(char **str)
 
 static int	check_infile(t_pipex *pipex)
 {
-	if (access(pipex->infile_path, F_OK) == ERROR && access(pipex->infile_path,
+	if (access(pipex->infile_path, F_OK) == ERROR || access(pipex->infile_path,
 			R_OK) == ERROR)
 		handle_error(errno, pipex);
 	return (EXIT_OK);
