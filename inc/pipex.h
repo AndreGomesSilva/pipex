@@ -30,14 +30,11 @@
 typedef struct s_cmd
 {
 	char	*path;
-	char	**split_path_parent;
-	char	**split_path_child;
-	char	*bin_path_parent;
-	char	*bin_path_child;
+	char	**split_path;
+	char	*bin_path;
 	char	*first_cmd;
 	char	*second_cmd;
-	char	**exec_first_cmd;
-	char	**exec_second_cmd;
+	char	**exec_cmd;
 }			t_cmd;
 
 typedef struct s_pipex
@@ -52,7 +49,9 @@ typedef struct s_pipex
 	t_cmd	*cmd;
 }			t_pipex;
 
-void		get_cmd(t_pipex *pipex);
+
+int			check_infile(t_pipex *pipex);
+void		get_cmd(t_pipex *pipex, char *cmd);
 char		*get_terminal(char **str);
 char		*ft_join_path(char *s1, char *s2);
 char		*get_bin_path(char **split_path);
@@ -61,7 +60,7 @@ void		free_matrix(char **matrix);
 char		**split_argv_cmd(char *cmd);
 char		*get_path(char **str);
 void		handle_error(int errnum, t_pipex *pipex);
-int			check_args(char **args, t_pipex *pipex);
+int			check_args(char **args);
 void		free_pipex(t_pipex *pipex);
 void		child_process(t_pipex *pipex, char **envp);
 void		parent_process(t_pipex *pipex, char **envp);

@@ -33,19 +33,15 @@ void	free_pipex(t_pipex *pipex)
 		close(pipex->pipe_fd[READ]);
 	if (pipex->pipe_fd[WRITE])
 		close(pipex->pipe_fd[WRITE]);
-	if (pipex->cmd->split_path_parent)
-		free_matrix((pipex->cmd->split_path_parent));
-	if (pipex->cmd->split_path_child)
-		free_matrix((pipex->cmd->split_path_child));
-	if (pipex->cmd->exec_first_cmd)
-		free_matrix(pipex->cmd->exec_first_cmd);
-	if (pipex->cmd->exec_second_cmd)
-		free_matrix(pipex->cmd->exec_second_cmd);
+	if (pipex->cmd->split_path)
+		free_matrix((pipex->cmd->split_path));
+	if (pipex->cmd->exec_cmd)
+		free_matrix(pipex->cmd->exec_cmd);
 }
 
 void	handle_error(int errnum, t_pipex *pipex)
 {
-	if (errnum == EACCES || errnum == ENOENT)
+	if (errnum == 13 || errnum == 2)
 		ft_printf("%s: %s: %s\n", pipex->terminal_path, strerror(errnum),
 			pipex->infile_path);
 	else

@@ -26,7 +26,7 @@ static int	check_program_name(char **str)
 	return (EXIT_FAIL);
 }
 
-static int	check_infile(t_pipex *pipex)
+int	check_infile(t_pipex *pipex)
 {
 	if (access(pipex->infile_path, F_OK) == ERROR || access(pipex->infile_path,
 			R_OK) == ERROR)
@@ -34,9 +34,9 @@ static int	check_infile(t_pipex *pipex)
 	return (EXIT_OK);
 }
 
-int	check_args(char **args, t_pipex *pipex)
+int	check_args(char **args)
 {
-	if (!check_program_name(args) && !check_infile(pipex))
+	if (!check_program_name(args))
 		return (EXIT_OK);
 	return (EXIT_FAIL);
 }

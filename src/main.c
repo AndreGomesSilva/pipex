@@ -19,8 +19,6 @@ static void	set_pipex(char **argv, char **envp, t_pipex *pipex)
 	pipex->cmd->path = get_path(envp);
 	pipex->cmd->first_cmd = argv[2];
 	pipex->cmd->second_cmd = argv[3];
-	pipex->terminal_path = get_terminal(envp);
-	get_cmd(pipex);
 }
 
 static int	pipex_init(t_pipex *pipex, char **envp)
@@ -47,10 +45,11 @@ int	main(int argc, char **argv, char *envp[])
 	ft_bzero(&pipex, sizeof(t_pipex));
 	ft_bzero(&cmd, sizeof(t_cmd));
 	pipex.cmd = &cmd;
+	pipex.terminal_path = get_terminal(envp);
 	if (argc == 5)
 	{
 		set_pipex(argv, envp, &pipex);
-		if (!check_args(argv, &pipex) && pipex.cmd->path)
+		if (!check_args(argv) && pipex.cmd->path)
 			pipex_init(&pipex, envp);
 		else
 		{

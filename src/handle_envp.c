@@ -12,34 +12,51 @@
 
 #include "../inc/pipex.h"
 
-void	get_cmd(t_pipex *pipex)
+void	get_cmd(t_pipex *pipex, char *cmd)
 {
-	pipex->cmd->exec_first_cmd = split_argv_cmd(pipex->cmd->first_cmd);
-	pipex->cmd->exec_second_cmd = split_argv_cmd(pipex->cmd->second_cmd);
-	pipex->cmd->split_path_child = split_path(pipex->cmd->path,
-			pipex->cmd->exec_first_cmd[0]);
-	pipex->cmd->split_path_parent = split_path(pipex->cmd->path,
-			pipex->cmd->exec_second_cmd[0]);
-	if (!pipex->cmd->split_path_parent || !pipex->cmd->split_path_child)
+	pipex->cmd->exec_cmd = split_argv_cmd(cmd);
+	pipex->cmd->split_path = split_path(pipex->cmd->path,
+			pipex->cmd->exec_cmd[0]);
+	if (!pipex->cmd->split_path)
 	{
 		ft_printf("%s: command not found: \n", pipex->terminal_path);
 		free_pipex(pipex);
 		exit(EXIT_FAIL);
 	}
-	pipex->cmd->bin_path_child = get_bin_path(pipex->cmd->split_path_child);
-	pipex->cmd->bin_path_parent = get_bin_path(pipex->cmd->split_path_parent);
-	if (!pipex->cmd->bin_path_parent || !pipex->cmd->bin_path_child)
+	pipex->cmd->bin_path = get_bin_path(pipex->cmd->split_path);
+	if (!pipex->cmd->bin_path)
 	{
-		if (!pipex->cmd->bin_path_child)
-			ft_printf("%s: command not found: %s\n", pipex->terminal_path,
-				pipex->cmd->first_cmd);
-		else
-			ft_printf("%s: command not found: %s\n", pipex->terminal_path,
-				pipex->cmd->second_cmd);
+		ft_printf("%s: command not found: %s\n", pipex->terminal_path, cmd);
 		free_pipex(pipex);
 		exit(EXIT_FAIL);
 	}
 }
+//void	get_cmd(t_pipex *pipex)
+//{
+//	pipex->cmd->exec_first_cmd = split_argv_cmd(pipex->cmd->first_cmd);
+//	pipex->cmd->exec_second_cmd = split_argv_cmd(pipex->cmd->second_cmd);
+//	pipex->cmd->split_path_child = split_path(pipex->cmd->path,
+//			pipex->cmd->exec_first_cmd[0]);
+//	pipex->cmd->split_path_parent = split_path(pipex->cmd->path,
+//			pipex->cmd->exec_second_cmd[0]);
+//	if (!pipex->cmd->split_path_parent || !pipex->cmd->split_path_child)
+//	{
+//		ft_printf("%s: command not found: \n", pipex->terminal_path);
+//		free_pipex(pipex);
+//	}
+//	pipex->cmd->bin_path_child = get_bin_path(pipex->cmd->split_path_child);
+//	pipex->cmd->bin_path_parent = get_bin_path(pipex->cmd->split_path_parent);
+//	if (!pipex->cmd->bin_path_parent || !pipex->cmd->bin_path_child)
+//	{
+//		if (!pipex->cmd->bin_path_child)
+//			ft_printf("%s: command not found: %s\n", pipex->terminal_path,
+//				pipex->cmd->first_cmd);
+//		else
+//			ft_printf("%s: command not found: %s\n", pipex->terminal_path,
+//				pipex->cmd->second_cmd);
+//		free_pipex(pipex);
+//	}
+//}
 
 char	**split_argv_cmd(char *cmd)
 {

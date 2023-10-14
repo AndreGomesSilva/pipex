@@ -41,6 +41,7 @@ void	child_process(t_pipex *pipex, char **envp)
 {
 	if (close(pipex->pipe_fd[READ]) == ERROR)
 		handle_error(errno, pipex);
+	check_infile(pipex);
 	pipex->infile_fd = open(pipex->infile_path, O_RDONLY);
 	if (pipex->infile_fd == ERROR)
 		handle_error(errno, pipex);
@@ -52,7 +53,8 @@ void	child_process(t_pipex *pipex, char **envp)
 		handle_error(errno, pipex);
 	if (close(pipex->pipe_fd[WRITE]) == ERROR)
 		handle_error(errno, pipex);
-	if (execve(pipex->cmd->bin_path_child, pipex->cmd->exec_first_cmd,
+	get_cmd(pipex, pipex->cmd->first_cmd);
+	if (execve(pipex->cmd->bin_path, pipex->cmd->exec_cmd,
 			envp) == ERROR)
 		handle_error(errno, pipex);
 }
@@ -71,7 +73,8 @@ void	parent_process(t_pipex *pipex, char **envp)
 		handle_error(errno, pipex);
 	if (close(pipex->pipe_fd[READ]) == ERROR)
 		handle_error(errno, pipex);
-	if (execve(pipex->cmd->bin_path_parent, pipex->cmd->exec_second_cmd,
+	get_cmd(pipex, pipex->cmd->second_cmd);
+	if (execve(pipex->cmd->bin_path, pipex->cmd->exec_cmd,
 			envp) == ERROR)
 		handle_error(errno, pipex);
 }

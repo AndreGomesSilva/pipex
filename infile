@@ -1,0 +1,12 @@
+total 80
+drwxr-xr-x 4 angomes- candidate  4096 Oct 14 18:00 .
+drwxr-xr-x 9 angomes- candidate  4096 Oct 14 17:58 ..
+-rw-r--r-- 1 angomes- candidate   108 Oct 14 17:17 fn_allowed
+-rw-r--r-- 1 angomes- candidate    66 Oct 14 17:58 fn_used
+drwxr-xr-x 8 angomes- candidate  4096 Oct 14 17:17 .git
+-rwxrwxrwx 1 angomes- candidate     0 Oct 14 18:00 infile
+-rw-r--r-- 1 angomes- candidate   160 Oct 14 17:17 Makefile
+drwxr-xr-x 2 angomes- candidate  4096 Oct 14 18:00 output
+-rwxr-xr-x 1 angomes- candidate 27392 Oct 14 18:00 pipex
+-rw-r--r-- 1 angomes- candidate   176 Oct 14 17:17 README.md
+-rwxr-xr-x 1 angomes- candidate 18826 Oct 14 17:17 test.sh
