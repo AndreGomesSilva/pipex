@@ -12,6 +12,41 @@
 
 #include "../inc/pipex.h"
 
+static int	mark_strlen(char *str)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if (str[i] != 39)
+			j++;
+		i++;
+	}
+	return (j);
+}
+
+void	remove_quatation_mark(t_pipex *pipex, char *cmd)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	pipex->cmd->new_cmd = ft_calloc(mark_strlen(cmd) + 1, sizeof (char));
+	while (cmd[i])
+	{
+		if (cmd[i] != 39)
+		{
+			pipex->cmd->new_cmd[j] = cmd[i];
+			j++;
+		}
+		i++;
+	}
+}
+
 char	*ft_join_path(char *s1, char *s2)
 {
 	size_t	s1_len;

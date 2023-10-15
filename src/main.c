@@ -30,10 +30,10 @@ static int	pipex_init(t_pipex *pipex, char **envp)
 		handle_error(0, pipex, 5);
 	else if (pipex->pid == 0)
 		child_process(pipex, envp);
-	if (wait(NULL) == ERROR)
-		handle_error(0, pipex, 4);
 	else if (pipex->pid > 0)
 		parent_process(pipex, envp);
+	if (wait(NULL) == ERROR)
+		handle_error(0, pipex, 4);
 	return (EXIT_FAIL);
 }
 

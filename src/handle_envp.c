@@ -14,7 +14,9 @@
 
 void	get_cmd(t_pipex *pipex, char *cmd)
 {
-	pipex->cmd->exec_cmd = split_argv_cmd(cmd);
+	remove_quatation_mark(pipex, cmd);
+	pipex->cmd->exec_cmd = split_argv_cmd(pipex->cmd->new_cmd);
+	free(pipex->cmd->new_cmd);
 	pipex->cmd->split_path = split_path(pipex->cmd->path,
 			pipex->cmd->exec_cmd[0]);
 	if (!pipex->cmd->split_path)
