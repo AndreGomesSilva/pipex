@@ -50,7 +50,7 @@ typedef struct s_pipex
 }			t_pipex;
 
 int			check_infile(t_pipex *pipex);
-void		remove_quatation_mark(t_pipex *pipex, char *cmd);
+void		remove_quotation_mark(t_pipex *pipex, char *cmd);
 void		get_cmd(t_pipex *pipex, char *cmd);
 char		*get_terminal(char **str);
 char		*ft_join_path(char *s1, char *s2);

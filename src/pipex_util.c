@@ -28,7 +28,7 @@ static int	mark_strlen(char *str)
 	return (j);
 }
 
-void	remove_quatation_mark(t_pipex *pipex, char *cmd)
+void	remove_quotation_mark(t_pipex *pipex, char *cmd)
 {
 	int	i;
 	int	j;
