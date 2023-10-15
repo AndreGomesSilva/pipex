@@ -21,7 +21,7 @@ BIN = pipex
 NAME = $(BIN)
 LIBFT_PATH = libraries/libft
 LIBFT = $(LIBFT_PATH)/libft.a
-ARGS = ./infile "ls -la" "wc -l" ./outfile
+ARGS = ./infile "ls -l" "" ./outfile
 
 FILES =\
 	main \

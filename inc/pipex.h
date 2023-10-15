@@ -19,7 +19,6 @@
 # define ERROR (-1)
 
 # include "../libraries/libft/inc/libft.h"
-# include <errno.h>
 # include <fcntl.h>
 # include <stdlib.h>
 # include <string.h>
@@ -49,7 +48,6 @@ typedef struct s_pipex
 	t_cmd	*cmd;
 }			t_pipex;
 
-
 int			check_infile(t_pipex *pipex);
 void		get_cmd(t_pipex *pipex, char *cmd);
 char		*get_terminal(char **str);
@@ -59,7 +57,7 @@ char		**split_path(char *str, char *cmd);
 void		free_matrix(char **matrix);
 char		**split_argv_cmd(char *cmd);
 char		*get_path(char **str);
-void		handle_error(int errnum, t_pipex *pipex);
+void		handle_error(int errnum, t_pipex *pipex, int flag);
 int			check_args(char **args);
 void		free_pipex(t_pipex *pipex);
 void		child_process(t_pipex *pipex, char **envp);

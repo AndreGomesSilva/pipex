@@ -24,17 +24,17 @@ static void	set_pipex(char **argv, char **envp, t_pipex *pipex)
 static int	pipex_init(t_pipex *pipex, char **envp)
 {
 	if (pipe(pipex->pipe_fd) == ERROR)
-		handle_error(errno, pipex);
+		handle_error(9, pipex, 0);
 	pipex->pid = fork();
 	if (pipex->pid == ERROR)
-		handle_error(errno, pipex);
+		handle_error(0, pipex, 5);
 	else if (pipex->pid == 0)
 		child_process(pipex, envp);
+	if (wait(NULL) == ERROR)
+		handle_error(0, pipex, 4);
 	else if (pipex->pid > 0)
 		parent_process(pipex, envp);
-	if (wait(NULL) == ERROR)
-		handle_error(errno, pipex);
-	return (EXIT_OK);
+	return (EXIT_FAIL);
 }
 
 int	main(int argc, char **argv, char *envp[])
@@ -59,7 +59,7 @@ int	main(int argc, char **argv, char *envp[])
 	}
 	else
 	{
-		ft_printf("%s :invalid number argument\n", pipex.terminal_path);
+		ft_printf("%s: invalid number of argument\n", pipex.terminal_path);
 		return (EXIT_FAIL);
 	}
 	free_pipex(&pipex);

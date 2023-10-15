@@ -39,13 +39,25 @@ void	free_pipex(t_pipex *pipex)
 		free_matrix(pipex->cmd->exec_cmd);
 }
 
-void	handle_error(int errnum, t_pipex *pipex)
+void	handle_error(int errnum, t_pipex *pipex, int flag)
 {
-	if (errnum == 13 || errnum == 2)
+	if (errnum == 13 && flag == 2)
 		ft_printf("%s: %s: %s\n", pipex->terminal_path, strerror(errnum),
 			pipex->infile_path);
-	else
-		ft_printf("%s: %s: \n", pipex->terminal_path, strerror(errnum));
+	if (errnum == 13 && flag == 3)
+		ft_printf("%s: %s: %s\n", pipex->terminal_path, strerror(errnum),
+			pipex->outfile_path);
+	if (errnum == 2 && flag == 1)
+		ft_printf("%s: %s: %s\n", pipex->terminal_path, strerror(errnum),
+			pipex->infile_path);
+	if (!errnum && flag == 4)
+		ft_printf("%s: %s\n", pipex->terminal_path,
+			"problem in the wait function");
+	if (!errnum && flag == 5)
+		ft_printf("%s: %s\n", pipex->terminal_path,
+			"problem in the fork function");
+	if (!flag)
+		ft_printf("%s: %s\n", pipex->terminal_path, strerror(errnum));
 	free_pipex(pipex);
 	exit(EXIT_FAIL);
 }
